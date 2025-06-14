@@ -2,7 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CreateCustomer {
-    int customerid=0;
     public static void createCustomer() {
         CustomerList list = new CustomerList();
         Scanner in = new Scanner(System.in);
@@ -13,19 +12,19 @@ public class CreateCustomer {
         String last_name = in.nextLine();
         boolean flag = false;
         String password="password";
-        do {
-            System.out.print("Please enter your password: ");
-            String password1 = in.nextLine();
-            System.out.print("Please repeat password: ");
-            String repeat_password = in.nextLine();
-            if (password1.equals(repeat_password)) {
-                flag = true;
-                password = password1;
-            }
-            else {
-                System.out.println("Passwords do not match, try again");
-            }
-        }while(!flag);
+        System.out.println("Please enter your password. Password must be at least 8 characters long\nContain at least one uppercase letter\nOne lowercase letter\nOne symbol");
+        String password1 = in.nextLine();
+        password1=CorrectPassword.correctPassword(password1);
+            do {
+                System.out.print("Please repeat password: ");
+                String repeat_password = in.nextLine();
+                if (password1.equals(repeat_password)) {
+                    flag = true;
+                    password = password1;
+                } else {
+                    System.out.println("Passwords do not match, try again");
+                }
+            }while(!flag);
         System.out.println("Please enter your username: ");
         String username = in.nextLine();
         int number = rand.nextInt(100000000, 999999999);
@@ -41,7 +40,6 @@ public class CreateCustomer {
         }while(flag1);
         System.out.println("System generated bank account number: " + number);
         int customer_id= list.GetCustomerCount()+1;
-        Customer customer = new Customer(first_name, last_name, password, username, number, customer_id);
         list.AddCustomer(first_name, last_name, password, username, number, customer_id);
         System.out.println("Your customer account has been created");
         Balance balance= new Balance(number, 0, 0, 0, 0, 0);
